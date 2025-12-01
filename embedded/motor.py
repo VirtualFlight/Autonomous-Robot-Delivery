@@ -1,13 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-from enum import Enum
-
-class Motor_GPIO(Enum):
-    LEFT_LOW = 1
-    LEFT_HIGH = 2
-    RIGHT_LOW = 3
-    RIGHT_HIGH = 4    
-
 
 class Motor:
     def __init__(self, left, right):
