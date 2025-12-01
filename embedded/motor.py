@@ -1,0 +1,60 @@
+import RPi.GPIO as GPIO
+import time
+from enum import Enum
+
+class Motor_GPIO(Enum):
+    LEFT_LOW = 1
+    LEFT_HIGH = 2
+    RIGHT_LOW = 3
+    RIGHT_HIGH = 4    
+
+
+class Motor:
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.left, GPIO.OUT)
+        GPIO.setup(self.right, GPIO.OUT)
+    
+    def forward(self):
+        GPIO.output(self.left, GPIO.LOW)
+        GPIO.output(self.right, GPIO.HIGH)        
+    
+    def backward(self):
+        GPIO.output(self.left, GPIO.LOW)
+        GPIO.output(self.right, GPIO.HIGH)
+
+    def move(self, left, right):
+        '''
+        PreCondition: GPIO.LOW or GPIO.HIGH
+        '''
+        assert left in (GPIO.LOW, GPIO.HIGH)
+        assert right in (GPIO.LOW, GPIO.HIGH)
+        GPIO.output(self.left, left)
+        GPIO.output(self.right, right)
+
+    def stop(self):
+        GPIO.output(self.left, GPIO.LOW)    
+        GPIO.output(self.right, GPIO.LOW)
+
+if __name__ == '__main__':
+    motor = Motor(1,2)
+    motor2 = Motor(3,4)
+
+    try:
+        print("Forward")
+        motor.forward()
+        motor2.forward()
+        time.sleep(2)
+        
+        motor.stop()
+        motor2.stop()
+    finally:
+        GPIO.cleanup()
+    
+    test = GPIO.LOW
+    test1 = "hello"
+
+    motor.move(test, test1)
