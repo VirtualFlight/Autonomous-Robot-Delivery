@@ -1,5 +1,4 @@
 # Definitions
-
 2 Parts of RL
 - Agent: whatever you can directly control
 - Environment: cannot directly control. must interact with through agent
@@ -82,3 +81,33 @@ Influence
 		- observing states, taking actions, receiving rewards and updating Q-values across many episodes
 - Over time the agent learns the optimal policy that consistently yields the highest possible reward in the environment
 
+# References
+Geeks4Geeks:
+- https://www.geeksforgeeks.org/machine-learning/q-learning-in-python/
+
+Pidora
+- https://pidora.ca/build-a-smart-robot-that-actually-learns-using-q-learning-on-raspberry-pi/
+
+# Code Definitions
+## Motor Controls
+1  = forward  
+0  = stop  
+-1 = backward (may remove)
+```py
+	set_motors(1,1) → go forward
+	set_motors(0,1) → turn left
+	set_motors(1,0) → turn right
+	set_motors(-1, -1) → reverse/back up
+```
+
+## Discount Factor & Learning Rate
+
+### Discount Factor
+- How much the robot values future rewards over immediate reward
+- High discount factor means future rewards > immediate
+- We need high discount factor because we care about fast navigation paths instead of brute-forcing
+
+### Learning Factor
+- How fast the robot updates old info with new info
+- High learning factor means the robot learns fast (good for early training) but can become unstable
+- We will use a low learning factor for the reliability and smooth Q-value changes
