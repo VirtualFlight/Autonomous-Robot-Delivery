@@ -1,7 +1,3 @@
-/*
- * Author: Jahiem Allen
- */
-
 package com.robotdelivery.model;
 
 import jakarta.persistence.*;
@@ -15,21 +11,34 @@ public class SensorData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "robot_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "robot_id", nullable = false)
     private Robot robot;
 
+    @Column(name = "position_x", nullable = false)
     private Integer positionX;
+
+    @Column(name = "position_y", nullable = false)
     private Integer positionY;
+
+    @Column(nullable = false)
     private Boolean leftObstacle;
+
+    @Column(nullable = false)
     private Boolean frontObstacle;
+
+    @Column(nullable = false)
     private Boolean rightObstacle;
+
+    @Column(nullable = false)
     private Integer batteryLevel;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime timestamp;
 
     @PrePersist
     protected void onCreate() {
-        timestamp = LocalDateTime.now();
+        if (timestamp == null) timestamp = LocalDateTime.now();
     }
 
     public SensorData() {}
@@ -46,8 +55,8 @@ public class SensorData {
 
     public static class Builder {
         private Robot robot;
-        private Integer positionX;
-        private Integer positionY;
+        private Integer positionX = 0;
+        private Integer positionY = 0;
         private Boolean leftObstacle = false;
         private Boolean frontObstacle = false;
         private Boolean rightObstacle = false;
@@ -59,20 +68,20 @@ public class SensorData {
         }
 
         public Builder position(Integer x, Integer y) {
-            this.positionX = x;
-            this.positionY = y;
+            if (x != null) this.positionX = x;
+            if (y != null) this.positionY = y;
             return this;
         }
 
         public Builder obstacles(Boolean left, Boolean front, Boolean right) {
-            this.leftObstacle = left;
-            this.frontObstacle = front;
-            this.rightObstacle = right;
+            if (left != null) this.leftObstacle = left;
+            if (front != null) this.frontObstacle = front;
+            if (right != null) this.rightObstacle = right;
             return this;
         }
 
         public Builder batteryLevel(Integer batteryLevel) {
-            this.batteryLevel = batteryLevel;
+            if (batteryLevel != null) this.batteryLevel = batteryLevel;
             return this;
         }
 

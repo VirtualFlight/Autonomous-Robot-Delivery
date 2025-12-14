@@ -1,6 +1,3 @@
-This should be a .sql file but it's not supported by IDEA just ULTIMATE
-will look into temp vscode porting for testing
-
 CREATE DATABASE IF NOT EXISTS robot_delivery;
 USE robot_delivery;
 
@@ -20,13 +17,13 @@ CREATE TABLE robots (
 CREATE TABLE sensor_data (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     robot_id BIGINT NOT NULL,
-    position_x INT NOT NULL,
-    position_y INT NOT NULL,
-    left_obstacle BOOLEAN,
-    front_obstacle BOOLEAN,
-    right_obstacle BOOLEAN,
-    battery_level INT,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    position_x INT NOT NULL DEFAULT 0,
+    position_y INT NOT NULL DEFAULT 0,
+    left_obstacle BOOLEAN NOT NULL DEFAULT FALSE,
+    front_obstacle BOOLEAN NOT NULL DEFAULT FALSE,
+    right_obstacle BOOLEAN NOT NULL DEFAULT FALSE,
+    battery_level INT NOT NULL DEFAULT 100,
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (robot_id) REFERENCES robots(id) ON DELETE CASCADE,
     INDEX idx_robot_timestamp (robot_id, timestamp)
 );

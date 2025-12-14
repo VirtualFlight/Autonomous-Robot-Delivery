@@ -3,9 +3,9 @@ spring:
     name: robot-delivery-system
 
   datasource:
-    url: jdbc:mysql://localhost:3306/robot_delivery?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/robot_delivery
     username: root
-    password: your_password
+    password: 'Testing123'
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

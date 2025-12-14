@@ -1,7 +1,3 @@
-/*
- * Author: Jahiem Allen
- */
-
 package com.robotdelivery.model;
 
 import jakarta.persistence.*;
@@ -15,13 +11,20 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "robot_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "robot_id", nullable = false)
     private Robot robot;
 
+    @Column(name = "start_x", nullable = false)
     private Integer startX;
+
+    @Column(name = "start_y", nullable = false)
     private Integer startY;
+
+    @Column(name = "destination_x", nullable = false)
     private Integer destinationX;
+
+    @Column(name = "destination_y", nullable = false)
     private Integer destinationY;
 
     @Enumerated(EnumType.STRING)
@@ -31,6 +34,8 @@ public class Delivery {
     private Integer obstaclesEncountered;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -49,17 +54,21 @@ public class Delivery {
         this.status = builder.status;
         this.distanceTraveled = builder.distanceTraveled;
         this.obstaclesEncountered = builder.obstaclesEncountered;
+        this.startTime = builder.startTime;
+        this.endTime = builder.endTime;
     }
 
     public static class Builder {
         private Robot robot;
-        private Integer startX;
-        private Integer startY;
-        private Integer destinationX;
-        private Integer destinationY;
+        private Integer startX = 0;
+        private Integer startY = 0;
+        private Integer destinationX = 0;
+        private Integer destinationY = 0;
         private DeliveryStatus status = DeliveryStatus.PENDING;
         private Integer distanceTraveled = 0;
         private Integer obstaclesEncountered = 0;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
 
         public Builder robot(Robot robot) {
             this.robot = robot;
@@ -83,7 +92,34 @@ public class Delivery {
             return this;
         }
 
+        public Builder distanceTraveled(Integer distanceTraveled) {
+            this.distanceTraveled = distanceTraveled;
+            return this;
+        }
+
+        public Builder obstaclesEncountered(Integer obstacles) {
+            this.obstaclesEncountered = obstacles;
+            return this;
+        }
+
+        public Builder startTime(LocalDateTime startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public Builder endTime(LocalDateTime endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
         public Delivery build() {
+            if (startX == null) startX = 0;
+            if (startY == null) startY = 0;
+            if (destinationX == null) destinationX = 0;
+            if (destinationY == null) destinationY = 0;
+            if (distanceTraveled == null) distanceTraveled = 0;
+            if (obstaclesEncountered == null) obstaclesEncountered = 0;
+            if (status == null) status = DeliveryStatus.PENDING;
             return new Delivery(this);
         }
     }
