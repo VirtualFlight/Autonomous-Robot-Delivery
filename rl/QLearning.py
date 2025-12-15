@@ -10,11 +10,17 @@ LEFT = 1
 RIGHT = 2
 actions = [FORWARD, LEFT, RIGHT]
 
-q_table = np.zeros((8, len(actions))) # 8 possible states
+q_table = np.zeros((32, len(actions))) # 32 possible states (8 * 4, 4 from the goal_direction)
 
-epsilon = 0.1
+epsilon = 0.1 # chance it randomly explores instead of following the highest q-value
+epsilon_min = 0.05
+epsilon_decay = 0.995
+
 learning_rate = 0.15 # how much we update old knowledge (low, stable)
 discount_factor = 0.95 # long-term rewardd vs immediate (high, thoughtful)
+
+NUM_EPISODES = 500
+MAX_STEPS = 100
 
 # --------------------------- GRID WORLD ---------------------------
 # FOR SIMULATION ONLY. THIS MUST BE REPLACED WITH THE REAL SENSORS
@@ -60,9 +66,9 @@ def sense_walls(): # TODO: REPLACE WITH REAL SENSORS
 
     return (left, front, right)
 
-def encode_state(s): # binary to int 0–7
-    left, front, right = s
-    return left * 4 + front * 2 + right * 1
+def encode_state(walls, goal_dir): # binary to int 0–7
+    left, front, right = walls
+    return (left << 4) | (front << 3) | (right << 2) | goal_dir
 
 def get_state():
     # left = GPIO.input(LEFT_SENSOR)
@@ -93,135 +99,86 @@ def do_action(a): #TODO: REPLACE WITH REAL MOTOR CONTROL
 
 # --------------------------- REWARD ---------------------------
 
-def get_reward(state, action):
+def get_reward(state, action, prev_dist): # TODO: ONLY DETECTS COLLISIONS AFTER CRASH, CHANGE TO ROBOT STOPS BEFORE COLLISIONS 
     global robot_x, robot_y
 
-    # TODO: ONLY DETECTS COLLISIONS AFTER CRASH, CHANGE TO ROBOT STOPS BEFORE COLLISIONS 
-
     if state[1]==1 and action==FORWARD: #crash penalty
-        return -5
-    if (robot_x, robot_y) == GOAL: #reached goal
-        return +10
-    if action == FORWARD and state[1] == 0: #forward progress reward
-        return +1
-    if action != FORWARD:
-        return -0.1      # turning slight penalty
+        return -5, prev_dist
     
-    return -0.2          # no progress penalty
+    new_dist = abs(robot_x - GOAL[0]) + abs(robot_y - GOAL[1])
+    reward = 0.0
 
-# --------------------------- Q-LEARNING LOOP ---------------------------
+    if new_dist < prev_dist: # reward based on distance from goal
+        reward += 1.0
+    elif new_dist > prev_dist:
+        reward -= 1.0
 
-if __name__ == "__main__":
-    step=0
+    if action != FORWARD: # turning slight penalty
+        reward -= 0.05
+    if (robot_x, robot_y) == GOAL: #reached goal
+        reward += 20
+    
+    return reward, new_dist
+
+def goal_direction():
+    dx = GOAL[0] - robot_x
+    dy = GOAL[1] - robot_y
+    if abs(dx) > abs(dy):
+        return 0 if dx > 0 else 1  # goal right / left
+    else:
+        return 2 if dy > 0 else 3  # goal down / up
+
+# --------------------------- TRAINING LOOP ---------------------------
+
+for episode in range(NUM_EPISODES):
     sensors = reset_robot()
+    prev_dist = abs(robot_x - GOAL[0]) + abs(robot_y - GOAL[1])
+    total_reward = 0
 
-    while True:
-        step+=1
-        s = encode_state(sensors)
+    for step in range(MAX_STEPS):
+        g = goal_direction()
+        s = encode_state(sensors, g)
 
         #epsilon-greedy strategy
         if (random.random() < epsilon): a = random.choice(actions) # Explore
         else: a = np.argmax(q_table[s])  # Exploit
 
         do_action(a)
-        time.sleep(0.05)
 
         #new state
         new_sensors = get_state()
-        s2 = encode_state(new_sensors)
-        reward = get_reward(new_sensors, a) # get reward/penalty
+        g2 = goal_direction()
+        s2 = encode_state(new_sensors, g2)
+        reward, prev_dist = get_reward(new_sensors, a, prev_dist) # get reward/penalty
+        total_reward += reward
 
         q_table[s,a] += learning_rate * (reward+discount_factor * np.max(q_table[s2]) - q_table[s,a])
 
-        # print every 50 steps
-        if step % 50 == 0:
-            print("\nQ-table snapshot:")
-            print(np.round(q_table, 2))
-
         if (robot_x, robot_y) == GOAL:
-            print("\n REACHED GOAL! RESETTING EPISODE...\n")
-            sensors = reset_robot()
-        else:
-            sensors = new_sensors
+            print("\n REACHED GOAL!\n")
+            break
+        
+    epsilon = max(epsilon_min, epsilon * epsilon_decay)
 
+    # print every 50 episodes
+    if episode % 50 == 0:
+        print(f"Episode {episode}, total reward = {total_reward:.1f}, epsilon = {epsilon:.2f}")
 
+np.save("qtable.npy", q_table)
+print("\nTraining complete. Q-table saved.\n")
 
+# --------------------------- EXECUTION ---------------------------
 
-# ------------------------------GEEKS4GEEKS IMPLEMENTATION--------------------------------------
+q_table = np.load("qtable.npy")
+epsilon = 0.0  # stop exploration
+learning_rate = 0.0
 
-# import numpy as np
-# import matplotlib.pyplot as plt
+sensors = reset_robot()
 
-# n_states = 16         
-# n_actions = 4          
-# goal_state = 15        
-
-# Q_table = np.zeros((n_states, n_actions)) # create new array with n_states * n_actions init to 0
-
-# learning_rate = 0.8     # how much new info overrides old info
-# discount_factor = 0.95  # how much future rewards are valued
-# exploration_prob = 0.2  # probability of taking random action
-# epochs = 1000           # num of training arcs
-
-# # 0:LEFT, 1:RIGHT, 2: UP, 3:DOWN
-# def get_next_state(state, action): #calc next state
-   
-#     row, col = divmod(state, 4) # row = state/4, col=remainder
-
-#     if action == 0 and col > 0:
-#         col -= 1
-#     elif action == 1 and col < 3:
-#         col += 1
-#     elif action == 2 and row > 0:
-#         row -= 1
-#     elif action == 3 and row < 3:
-#         row += 1
-
-#     return row * 4 + col
-
-# # train to learn optimal policy:
-# for epoch in range(epochs):
-#     current_state = np.random.randint(0, n_states)  
-
-#     while True:
-#         # choose action using epsilon-greedy policy
-#         if np.random.rand() < exploration_prob:
-#             action = np.random.randint(0, n_actions)
-#         else:
-#             action = np.argmax(Q_table[current_state])
-
-#         # move to next state
-#         next_state = get_next_state(current_state, action)
-
-#         reward = 1 if next_state == goal_state else 0
-
-#         # update Q-value using bellman equation
-#         Q_table[current_state, action] += learning_rate * (
-#             reward + discount_factor * np.max(Q_table[next_state]) - Q_table[current_state, action]
-#         )
-
-#         if next_state == goal_state: # end episode if goal reached
-#             break
-
-#         current_state = next_state
-
-
-# q_values_grid = np.max(Q_table, axis=1).reshape((4, 4))
-
-# plt.figure(figsize=(6, 6))
-# plt.imshow(q_values_grid, cmap='coolwarm', interpolation='nearest')
-# plt.colorbar(label='Q-value')
-# plt.title('Learned Q-values for Each State')
-# plt.xticks(np.arange(4), ['0', '1', '2', '3'])
-# plt.yticks(np.arange(4), ['0', '1', '2', '3'])
-# plt.gca().invert_yaxis()
-# plt.grid(True)
-
-# for i in range(4):
-#     for j in range(4):
-#         plt.text(j, i, f'{q_values_grid[i, j]:.2f}', ha='center', va='center', color='black')
-
-# plt.show()
-
-# print("Learned Q-table:")
-# print(Q_table)
+for _ in range(1): #TODO: REPLACE WITH INFINITE LOOP WHEN LINKED TO ROBOT
+    g = goal_direction()
+    s = encode_state(sensors, g)
+    action = np.argmax(q_table[s])  # pure policy
+    do_action(action)
+    sensors = get_state()
+    time.sleep(0.05)

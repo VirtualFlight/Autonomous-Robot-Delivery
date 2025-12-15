@@ -12,7 +12,7 @@ class Motor:
     
     def forward(self):
         GPIO.output(self.left, GPIO.LOW)
-        GPIO.output(self.right, GPIO.HIGH)        
+        GPIO.output(self.right, GPIO.HIGH)
     
     def backward(self):
         GPIO.output(self.left, GPIO.LOW)

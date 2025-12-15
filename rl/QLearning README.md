@@ -10,3 +10,4 @@ To set up virtual environment:
 qlearning_env\Scripts\activate # ON WINDOWS
 source qlearning_env/bin/activate # ON LINUX
 ```
+- I'm unsure if this works as of right now, need to check after the raspberry pi integration
