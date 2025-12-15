@@ -43,7 +43,7 @@ public class SensorData {
 
     public SensorData() {}
 
-    private SensorData(Builder builder) {
+    private SensorData(SensorBuilder builder) {
         this.robot = builder.robot;
         this.positionX = builder.positionX;
         this.positionY = builder.positionY;
@@ -53,7 +53,7 @@ public class SensorData {
         this.batteryLevel = builder.batteryLevel;
     }
 
-    public static class Builder {
+    public static class SensorBuilder {
         private Robot robot;
         private Integer positionX = 0;
         private Integer positionY = 0;
@@ -62,25 +62,25 @@ public class SensorData {
         private Boolean rightObstacle = false;
         private Integer batteryLevel = 100;
 
-        public Builder robot(Robot robot) {
+        public SensorBuilder robot(Robot robot) {
             this.robot = robot;
             return this;
         }
 
-        public Builder position(Integer x, Integer y) {
+        public SensorBuilder position(Integer x, Integer y) {
             if (x != null) this.positionX = x;
             if (y != null) this.positionY = y;
             return this;
         }
 
-        public Builder obstacles(Boolean left, Boolean front, Boolean right) {
+        public SensorBuilder obstacles(Boolean left, Boolean front, Boolean right) {
             if (left != null) this.leftObstacle = left;
             if (front != null) this.frontObstacle = front;
             if (right != null) this.rightObstacle = right;
             return this;
         }
 
-        public Builder batteryLevel(Integer batteryLevel) {
+        public SensorBuilder batteryLevel(Integer batteryLevel) {
             if (batteryLevel != null) this.batteryLevel = batteryLevel;
             return this;
         }

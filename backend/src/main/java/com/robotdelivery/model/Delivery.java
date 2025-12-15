@@ -45,7 +45,7 @@ public class Delivery {
 
     public Delivery() {}
 
-    private Delivery(Builder builder) {
+    private Delivery(DeliveryBuilder builder) {
         this.robot = builder.robot;
         this.startX = builder.startX;
         this.startY = builder.startY;
@@ -58,7 +58,7 @@ public class Delivery {
         this.endTime = builder.endTime;
     }
 
-    public static class Builder {
+    public static class DeliveryBuilder {
         private Robot robot;
         private Integer startX = 0;
         private Integer startY = 0;
@@ -70,44 +70,44 @@ public class Delivery {
         private LocalDateTime startTime;
         private LocalDateTime endTime;
 
-        public Builder robot(Robot robot) {
+        public DeliveryBuilder robot(Robot robot) {
             this.robot = robot;
             return this;
         }
 
-        public Builder start(Integer x, Integer y) {
+        public DeliveryBuilder start(Integer x, Integer y) {
             this.startX = x;
             this.startY = y;
             return this;
         }
 
-        public Builder destination(Integer x, Integer y) {
+        public DeliveryBuilder destination(Integer x, Integer y) {
             this.destinationX = x;
             this.destinationY = y;
             return this;
         }
 
-        public Builder status(DeliveryStatus status) {
+        public DeliveryBuilder status(DeliveryStatus status) {
             this.status = status;
             return this;
         }
 
-        public Builder distanceTraveled(Integer distanceTraveled) {
+        public DeliveryBuilder distanceTraveled(Integer distanceTraveled) {
             this.distanceTraveled = distanceTraveled;
             return this;
         }
 
-        public Builder obstaclesEncountered(Integer obstacles) {
+        public DeliveryBuilder obstaclesEncountered(Integer obstacles) {
             this.obstaclesEncountered = obstacles;
             return this;
         }
 
-        public Builder startTime(LocalDateTime startTime) {
+        public DeliveryBuilder startTime(LocalDateTime startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public Builder endTime(LocalDateTime endTime) {
+        public DeliveryBuilder endTime(LocalDateTime endTime) {
             this.endTime = endTime;
             return this;
         }

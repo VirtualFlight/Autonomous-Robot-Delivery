@@ -35,7 +35,7 @@ public class Robot {
 
     public Robot() {}
 
-    private Robot(Builder builder) {
+    private Robot(RobotBuilder builder) {
         this.robotId = builder.robotId;
         this.name = builder.name;
         this.status = builder.status;
@@ -45,7 +45,7 @@ public class Robot {
         this.lastHeartbeat = builder.lastHeartbeat;
     }
 
-    public static class Builder {
+    public static class RobotBuilder {
         private String robotId;
         private String name;
         private RobotStatus status = RobotStatus.IDLE;
@@ -54,33 +54,33 @@ public class Robot {
         private Integer batteryLevel = 100;
         private LocalDateTime lastHeartbeat = LocalDateTime.now();
 
-        public Builder robotId(String robotId) {
+        public RobotBuilder robotId(String robotId) {
             this.robotId = robotId;
             return this;
         }
 
-        public Builder name(String name) {
+        public RobotBuilder name(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder status(RobotStatus status) {
+        public RobotBuilder status(RobotStatus status) {
             this.status = status;
             return this;
         }
 
-        public Builder position(Integer x, Integer y) {
+        public RobotBuilder position(Integer x, Integer y) {
             this.currentX = x;
             this.currentY = y;
             return this;
         }
 
-        public Builder batteryLevel(Integer batteryLevel) {
+        public RobotBuilder batteryLevel(Integer batteryLevel) {
             this.batteryLevel = batteryLevel;
             return this;
         }
 
-        public Builder lastHeartbeat(LocalDateTime lastHeartbeat) {
+        public RobotBuilder lastHeartbeat(LocalDateTime lastHeartbeat) {
             this.lastHeartbeat = lastHeartbeat;
             return this;
         }
