@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/jahiem/IdeaProjects/Autonomous-Robot-Delivery/backend/src/main/java/com/robotdelivery</OriginalElement>
+  <nodes>
+    <node x="882.5" y="2126.5">com.robotdelivery.controller.DeliveryController</node>
+    <node x="526.5" y="-220.5">com.robotdelivery.observer.LoggerObserver</node>
+    <node x="886.5" y="1215.0">com.robotdelivery.observer.ConsoleLogger</node>
+    <node x="897.0" y="1774.5">com.robotdelivery.service.DeliveryService</node>
+    <node x="343.5" y="-344.5">com.robotdelivery.repository.DeliveryRepository</node>
+    <node x="669.5" y="406.0">com.robotdelivery.model.Robot</node>
+    <node x="287.0" y="974.0">com.robotdelivery.model.Delivery</node>
+    <node x="-226.0" y="1046.0">com.robotdelivery.model.SensorData</node>
+    <node x="128.0" y="-185.0">com.robotdelivery.config.ObserverConfig</node>
+    <node x="-223.5" y="2383.0">com.robotdelivery.observer.EventPublisher</node>
+    <node x="-19.0" y="-345.0">com.robotdelivery.RobotDeliveryApplication</node>
+    <node x="585.0" y="2383.0">com.robotdelivery.model.Robot.RobotBuilder</node>
+    <node x="572.0" y="1823.0">com.robotdelivery.model.Robot.RobotStatus</node>
+    <node x="-221.5" y="1787.0">com.robotdelivery.model.SensorData.SensorBuilder</node>
+    <node x="245.5" y="1823.0">com.robotdelivery.model.Delivery.DeliveryStatus</node>
+    <node x="466.0" y="227.5">com.robotdelivery.repository.SensorDataRepository</node>
+    <node x="-85.0" y="586.5">com.robotdelivery.controller.RobotController</node>
+    <node x="227.0" y="-21.0">com.robotdelivery.factory.EntityFactory</node>
+    <node x="-228.5" y="166.5">com.robotdelivery.service.RobotService</node>
+    <node x="155.5" y="2079.0">com.robotdelivery.model.Delivery.DeliveryBuilder</node>
+    <node x="-222.0" y="-172.5">com.robotdelivery.repository.RobotRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.robotdelivery.model.Robot.RobotBuilder" target="com.robotdelivery.model.Robot" relationship="CREATE">
+      <point x="106.0" y="-116.0" />
+      <point x="850.0" y="2099.0" />
+      <point x="864.0" y="2099.0" />
+      <point x="864.0" y="1859.0" />
+      <point x="860.3333333333333" y="1859.0" />
+      <point x="76.33333333333334" y="273.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Robot.RobotBuilder" target="com.robotdelivery.model.Robot.RobotStatus" relationship="TO_ONE">
+      <point x="-106.0" y="-116.0" />
+      <point x="638.0" y="2359.0" />
+      <point x="544.0" y="2359.0" />
+      <point x="544.0" y="1799.0" />
+      <point x="628.0" y="1799.0" />
+      <point x="-56.0" y="-56.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Delivery" target="com.robotdelivery.model.Delivery.DeliveryStatus" relationship="TO_ONE">
+      <point x="0.0" y="345.0" />
+      <point x="404.0" y="1779.0" />
+      <point x="304.75" y="1779.0" />
+      <point x="-59.25" y="-56.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.SensorData.SensorBuilder" target="com.robotdelivery.model.SensorData" relationship="CREATE">
+      <point x="-92.75" y="-92.0" />
+      <point x="-128.75" y="1759.0" />
+      <point x="-171.0" y="1759.0" />
+      <point x="-55.0" y="273.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Robot" target="com.robotdelivery.model.Robot.RobotStatus" relationship="TO_ONE">
+      <point x="-76.33333333333334" y="273.0" />
+      <point x="707.6666666666666" y="1779.0" />
+      <point x="628.0" y="1779.0" />
+      <point x="-56.0" y="-56.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Robot.RobotStatus" target="com.robotdelivery.model.Robot" relationship="INNER_CLASS">
+      <point x="56.0" y="-56.0" />
+      <point x="740.0" y="1799.0" />
+      <point x="784.0" y="1799.0" />
+      <point x="0.0" y="273.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Delivery.DeliveryBuilder" target="com.robotdelivery.model.Delivery" relationship="CREATE">
+      <point x="-112.33333333333337" y="-140.0" />
+      <point x="211.66666666666663" y="2059.0" />
+      <point x="184.0" y="2059.0" />
+      <point x="184.0" y="1699.0" />
+      <point x="326.0" y="1699.0" />
+      <point x="-78.0" y="345.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.SensorData.SensorBuilder" target="com.robotdelivery.model.SensorData" relationship="INNER_CLASS">
+      <point x="92.75" y="-92.0" />
+      <point x="56.75" y="1759.0" />
+      <point x="-61.0" y="1759.0" />
+      <point x="55.0" y="273.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Delivery.DeliveryBuilder" target="com.robotdelivery.model.Delivery" relationship="INNER_CLASS">
+      <point x="112.33333333333334" y="-140.0" />
+      <point x="436.33333333333337" y="2059.0" />
+      <point x="504.0" y="2059.0" />
+      <point x="504.0" y="1799.0" />
+      <point x="484.0" y="1799.0" />
+      <point x="484.0" y="1699.0" />
+      <point x="482.0" y="1699.0" />
+      <point x="78.0" y="345.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Delivery.DeliveryBuilder" target="com.robotdelivery.model.Delivery.DeliveryStatus" relationship="TO_ONE">
+      <point x="0.0" y="-140.0" />
+      <point x="324.0" y="2059.0" />
+      <point x="224.0" y="2059.0" />
+      <point x="224.0" y="1799.0" />
+      <point x="304.75" y="1799.0" />
+      <point x="-59.25" y="-56.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Robot.RobotBuilder" target="com.robotdelivery.model.Robot" relationship="INNER_CLASS">
+      <point x="0.0" y="-116.0" />
+      <point x="744.0" y="2359.0" />
+      <point x="824.0" y="2359.0" />
+      <point x="824.0" y="1799.0" />
+      <point x="784.0" y="1799.0" />
+      <point x="0.0" y="273.0" />
+    </edge>
+    <edge source="com.robotdelivery.model.Delivery.DeliveryStatus" target="com.robotdelivery.model.Delivery" relationship="INNER_CLASS">
+      <point x="59.25" y="-56.0" />
+      <point x="423.25" y="1799.0" />
+      <point x="484.0" y="1799.0" />
+      <point x="484.0" y="1699.0" />
+      <point x="482.0" y="1699.0" />
+      <point x="78.0" y="345.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.3804530201342282" showDependencies="true" x="558.5000000000002" y="475.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
