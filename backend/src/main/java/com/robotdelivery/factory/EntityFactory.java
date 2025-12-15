@@ -13,7 +13,7 @@ import java.util.Map;
 public class EntityFactory {
 
     public Robot createRobot(String robotId, String name) {
-        return new Robot.Builder()
+        return new Robot.RobotBuilder()
                 .robotId(robotId)
                 .name(name)
                 .status(Robot.RobotStatus.IDLE)
@@ -31,7 +31,7 @@ public class EntityFactory {
         Boolean right = (Boolean) sensorRequest.get("rightObstacle");
         Integer battery = (Integer) sensorRequest.get("batteryLevel");
 
-        return new SensorData.Builder()
+        return new SensorData.SensorBuilder()
                 .robot(robot)
                 .position(x, y)
                 .obstacles(left, front, right)
@@ -40,7 +40,7 @@ public class EntityFactory {
     }
 
     public Delivery createDelivery(Robot robot, Integer destX, Integer destY) {
-        return new Delivery.Builder()
+        return new Delivery.DeliveryBuilder()
                 .robot(robot)
                 .start(robot.getCurrentX(), robot.getCurrentY())
                 .destination(destX, destY)
@@ -49,7 +49,7 @@ public class EntityFactory {
     }
 
     public Robot createRobotWithPosition(String robotId, String name, Integer x, Integer y) {
-        return new Robot.Builder()
+        return new Robot.RobotBuilder()
                 .robotId(robotId)
                 .name(name)
                 .status(Robot.RobotStatus.IDLE)

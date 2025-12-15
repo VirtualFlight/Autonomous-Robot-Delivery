@@ -42,17 +42,11 @@ public class RobotService {
         return robot;
     }
 
-    public void processSensorData(Map<String, Object> sensorDataMap) {
-        String robotId = (String) sensorDataMap.get("robotId");
-        if (robotId == null) throw new RuntimeException("robotId is missing");
-
-        Integer x = toInteger(sensorDataMap.get("positionX"), 0);
-        Integer y = toInteger(sensorDataMap.get("positionY"), 0);
-        Integer battery = toInteger(sensorDataMap.get("batteryLevel"), 100);
-
-        Boolean left = toBoolean(sensorDataMap.get("leftObstacle"), false);
-        Boolean front = toBoolean(sensorDataMap.get("frontObstacle"), false);
-        Boolean right = toBoolean(sensorDataMap.get("rightObstacle"), false);
+    public void processSensorData(Map<String, Object> sensorData) {
+        String robotId = (String) sensorData.get("robotId");
+        Integer x = (Integer) sensorData.get("positionX");
+        Integer y = (Integer) sensorData.get("positionY");
+        Integer battery = (Integer) sensorData.get("batteryLevel");
 
         Robot robot = robotRepository.findByRobotId(robotId)
                 .orElseThrow(() -> new RuntimeException("Robot not found"));
@@ -63,14 +57,9 @@ public class RobotService {
         robot.setLastHeartbeat(LocalDateTime.now());
         robotRepository.save(robot);
 
-        SensorData data = new SensorData.Builder()
-                .robot(robot)
-                .position(x, y)
-                .obstacles(left, front, right)
-                .batteryLevel(battery)
-                .build();
-
+        SensorData data = entityFactory.createSensorData(robot, sensorData);
         sensorDataRepository.save(data);
+
         eventPublisher.notifySensorDataReceived(robotId, x, y);
     }
 
@@ -86,17 +75,5 @@ public class RobotService {
     public List<SensorData> getSensorHistory(String robotId) {
         Robot robot = getRobot(robotId);
         return sensorDataRepository.findByRobotOrderByTimestampDesc(robot);
-    }
-
-    private Integer toInteger(Object obj, int defaultVal) {
-        if (obj == null) return defaultVal;
-        if (obj instanceof Number) return ((Number) obj).intValue();
-        try { return Integer.parseInt(obj.toString()); } catch (Exception e) { return defaultVal; }
-    }
-
-    private Boolean toBoolean(Object obj, boolean defaultVal) {
-        if (obj == null) return defaultVal;
-        if (obj instanceof Boolean) return (Boolean) obj;
-        return Boolean.parseBoolean(obj.toString());
     }
 }
