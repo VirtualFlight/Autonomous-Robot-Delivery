@@ -1,9 +1,48 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div>
+      {/* COPY AND PASTE */}
+      {/* <nav>
+        <Link href="#">Restaurants</Link>
+        <Link href="#">Active Orders</Link>
+        <Link href="/login">Login</Link>
+        <Link href="/OrderHistory">Order history</Link>
+        <Link href="#">Profile</Link>
+        className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans"
+      </nav> */}
+
+      <main className="flex flex-col border pr-40 pl-40 pt-10">
+        <h1> What's for dinner? </h1>
+        {/* location and delivery thing */}
+        <div className="flex gap-2">
+          <Image
+            src="/location.svg"
+            alt="location icon"
+            width={24}
+            height={24}
+          />
+          <h3 className="opacity-60"> Delivering to: 1 University Blvd, L6G OH2 </h3>
+        </div>
+        
+        {/* Search for restaurants */}
+        <div className="flex border border-foreground/20  p-4 gap-2 rounded-xl">
+          <Image
+            src="/search.svg"
+            alt="search icon"
+            width={28}
+            height={28}
+          />
+          <h2 className="opacity-60">Search for restaurants or cuisines...</h2>
+        </div>
+
+
+
+
+      </main>
+      {/* <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -41,13 +80,13 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {/* <Image
+            <Image
               className="dark:invert"
               src="/vercel.svg"
               alt="Vercel logomark"
               width={16}
               height={16}
-            /> */}
+            />
             Deploy Now
           </a>
           <a
@@ -59,7 +98,7 @@ export default function Home() {
             Documentation
           </a>
         </div>
-      </main>
+      </main> */}
     </div>
   );
 }
