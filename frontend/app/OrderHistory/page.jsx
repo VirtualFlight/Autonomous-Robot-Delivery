@@ -23,7 +23,10 @@ export default function Home() {
           </div>
           <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between">
             <p className="text-gray-500 text-2xl">Avg Rating</p>
-            <p className="text-3xl">4.8 ⭐</p>
+            <div className="flex items-center">
+              <p className="text-3xl">4.8</p>
+              <Image src="/star.svg" width={50} height={50} alt="star" className="ml-2 w-8 h-8"/>
+            </div>
           </div>
         </div>
 
