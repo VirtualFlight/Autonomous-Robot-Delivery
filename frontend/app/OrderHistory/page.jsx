@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import NavBar from "../Components/NavBar"
 import OrderHistoryItem from "../Components/OrderHistoryItem"
 
@@ -16,15 +15,15 @@ export default function Home() {
         <div className="flex h-1/5 w-full gap-8">
           <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between">
             <p className="text-gray-500 text-2xl">Total Orders</p>
-            <p className="text-4xl">6</p>
+            <p className="text-3xl">6</p>
           </div>
           <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between">
             <p className="text-gray-500 text-2xl">Total Spent</p>
-            <p className="text-4xl">$175.44</p>
+            <p className="text-3xl">$175.44</p>
           </div>
           <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between">
             <p className="text-gray-500 text-2xl">Avg Rating</p>
-            <p className="text-4xl">4.8 ⭐</p>
+            <p className="text-3xl">4.8 ⭐</p>
           </div>
         </div>
 

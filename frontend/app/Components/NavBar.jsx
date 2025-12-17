@@ -41,7 +41,7 @@ export default function NavBar() {
           </Link>
           
           <Link 
-            href="#" 
+            href="/Profile" 
             className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-700"
           >
             <span className="text-xl">👤</span>

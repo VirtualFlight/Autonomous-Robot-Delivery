@@ -1,47 +1,134 @@
 import Image from "next/image";
 import Link from "next/link";
+import NavBar from "./Components/NavBar"
 
 export default function Home() {
   return (
-    <div>
-      {/* COPY AND PASTE */}
-      {/* <nav>
-        <Link href="#">Restaurants</Link>
-        <Link href="#">Active Orders</Link>
-        <Link href="/login">Login</Link>
-        <Link href="/OrderHistory">Order history</Link>
-        <Link href="#">Profile</Link>
-        className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans"
-      </nav> */}
+    <div className="flex min-h-screen bg-zinc-50 font-sans p-4">
+      {/* nav bar */}
+      <NavBar/>
 
-      <main className="flex flex-col border pr-40 pl-40 pt-10">
-        <h1> What's for dinner? </h1>
-        {/* location and delivery thing */}
-        <div className="flex gap-2">
-          <Image
-            src="/location.svg"
-            alt="location icon"
-            width={24}
-            height={24}
-          />
-          <h3 className="opacity-60"> Delivering to: 1 University Blvd, L6G OH2 </h3>
-        </div>
+      <main className="ml-[25%] flex flex-col p-8 w-full">
         
-        {/* Search for restaurants */}
-        <div className="flex border border-foreground/20  p-4 gap-2 rounded-xl">
-          <Image
-            src="/search.svg"
-            alt="search icon"
-            width={28}
-            height={28}
-          />
-          <h2 className="opacity-60">Search for restaurants or cuisines...</h2>
+        {/* Top half */}
+        <div className="flex flex-col gap-2"> 
+
+          <h1> What's for dinner? </h1>
+          {/* location and delivery thing */}
+          <div className="flex gap-2">
+            <Image
+              src="/location.svg"
+              alt="location icon"
+              width={24}
+              height={24}
+            />
+            <h3 className="opacity-60"> Delivering to: 1 University Blvd, L6G OH2 </h3>
+          </div>
+          
+          {/* Search for restaurants */}
+          <div className="flex border border-foreground/20  p-4 gap-2 rounded-xl">
+            <Image
+              src="/search.svg"
+              alt="search icon"
+              width={28}
+              height={28}
+            />
+            <h2 className="opacity-60">Search for restaurants or cuisines...</h2>
+          </div>
+        </div>
+
+        {/* Bottom half */}
+        <div className="block">
+
+          <h1> Featured </h1>
+
+          {/* Multiple restaurant container */}
+
+          <div className="">
+
+
+            {/* Individual restaurant stuff */}
+            <div className="flex border-2 border-amber-500 w-[5rem] h-[10rem]">
+              {/* Image container, controls image size */}
+              <div className="overflow-hidden">
+                <Image
+                  src="/search.svg"
+                  alt="temp burger"
+                  width={200}
+                  height={200}
+                  // className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Restaurant Description */}
+              <div className="flex flex-col p-3">
+                <h2> The Burger Place</h2>
+                <h3 className="opacity-60"> Burgers • American</h3>
+
+                {/* Rating, min, km */}
+                <div className="flex gap-3">
+                  
+                  {/* Rating */}
+                  <div className="flex">
+
+                    <Image
+                      src="/star.svg"
+                      alt="star icon"
+                      width={19}
+                      height={19}
+                    />
+
+                    <h3 className="opacity-60">4.9</h3>
+                  </div>
+
+                  {/* Duration */}
+                  <div className="flex">
+
+                    <Image
+                      src="/clock.svg"
+                      alt="clock icon"
+                      width={19}
+                      height={19}
+                    />
+
+                    <h3 className="opacity-60">12-15 min</h3>
+                  </div>
+
+                  {/* Distance */}
+                  <div className="flex">
+
+                    <Image
+                      src="/location.svg"
+                      alt="location icon"
+                      width={19}
+                      height={19}
+                    />
+
+                    <h3 className="opacity-60">1.3km</h3>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+            </div>
+
+            
+
+
+          </div>
+
+
+
         </div>
 
 
 
 
       </main>
+
+      
       {/* <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
           className="dark:invert"
