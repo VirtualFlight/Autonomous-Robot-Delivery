@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import NavBar from "./Components/NavBar"
+import RestaurantFeatureItem from "./Components/RestaurantFeatureItem";
 
 export default function Home() {
   return (
@@ -37,92 +38,15 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom half */}
-        <div className="block">
-
-          <h1> Featured </h1>
-
-          {/* Multiple restaurant container */}
-
-          <div className="">
-
-
-            {/* Individual restaurant stuff */}
-            <div className="flex border-2 border-amber-500 w-[5rem] h-[10rem]">
-              {/* Image container, controls image size */}
-              <div className="overflow-hidden">
-                <Image
-                  src="/search.svg"
-                  alt="temp burger"
-                  width={200}
-                  height={200}
-                  // className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Restaurant Description */}
-              <div className="flex flex-col p-3">
-                <h2> The Burger Place</h2>
-                <h3 className="opacity-60"> Burgers • American</h3>
-
-                {/* Rating, min, km */}
-                <div className="flex gap-3">
-                  
-                  {/* Rating */}
-                  <div className="flex">
-
-                    <Image
-                      src="/star.svg"
-                      alt="star icon"
-                      width={19}
-                      height={19}
-                    />
-
-                    <h3 className="opacity-60">4.9</h3>
-                  </div>
-
-                  {/* Duration */}
-                  <div className="flex">
-
-                    <Image
-                      src="/clock.svg"
-                      alt="clock icon"
-                      width={19}
-                      height={19}
-                    />
-
-                    <h3 className="opacity-60">12-15 min</h3>
-                  </div>
-
-                  {/* Distance */}
-                  <div className="flex">
-
-                    <Image
-                      src="/location.svg"
-                      alt="location icon"
-                      width={19}
-                      height={19}
-                    />
-
-                    <h3 className="opacity-60">1.3km</h3>
-                  </div>
-
-
-                </div>
-              </div>
-
-
-            </div>
-
-            
-
-
-          </div>
-
-
-
+        {/* Bottom Half */}
+        <h1 className="pt-7 pb-4">Featured</h1>
+        <div className="flex justify-between flex-wrap gap-y-3">
+          <RestaurantFeatureItem/>
+          <RestaurantFeatureItem/>
+          <RestaurantFeatureItem/>
+          <RestaurantFeatureItem/>
         </div>
-
+        
 
 
 
