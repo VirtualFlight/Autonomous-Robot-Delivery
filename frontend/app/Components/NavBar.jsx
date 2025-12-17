@@ -17,7 +17,7 @@ export default function NavBar() {
         <div className="flex-1 flex flex-col gap-3">
           <Link 
             href="/" 
-            className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition-colors text-gray-700"
+            className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 hover:text-gray-700 duration-200 transition-colors text-gray-700"
           >
             <Image src="/home.svg" width={50} height={50} className="text-xl w-8 h-8" />
             <span className="font-medium text-lg">Restaurants</span>
@@ -25,7 +25,7 @@ export default function NavBar() {
           
           <Link 
             href="/ActiveOrders" 
-            className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-700"
+            className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 duration-200 transition-colors text-gray-700"
           >
             <Image src="/orders.svg" width={50} height={50} className="text-xl w-8 h-8" />
             <span className="font-medium text-lg">Active Orders</span>
@@ -34,7 +34,7 @@ export default function NavBar() {
           
           <Link 
             href="/OrderHistory" 
-            className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-700"
+            className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 duration-200 transition-colors text-gray-700"
           >
             <Image src="/clock.svg" width={50} height={50} className="text-xl w-8 h-8" />
             <span className="font-medium text-lg">Order History</span>
@@ -42,7 +42,7 @@ export default function NavBar() {
           
           <Link 
             href="/Profile" 
-            className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-700"
+            className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 duration-200 transition-colors text-gray-700"
           >
             <Image src="/profile_icon.svg" width={50} height={50} className="text-xl w-8 h-8" />
             <span className="font-medium text-lg">Profile</span>
@@ -50,7 +50,7 @@ export default function NavBar() {
         </div>
         
         <div className="pt-8 border-t border-gray-200">
-            <Link href="/login" className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-700">
+            <Link href="/login" className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 duration-200 transition-colors text-gray-700">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-red-300 rounded-xl flex items-center justify-center">
                         <Image src="/logout.svg" width={50} height={50} className="text-red-600 font-semibold text-lg p-3" alt="logout icon"/>
