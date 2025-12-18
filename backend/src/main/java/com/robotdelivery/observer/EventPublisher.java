@@ -87,4 +87,15 @@ public class EventPublisher {
             observer.onMenuItemAdded(itemName);
         }
     }
+
+    public void onTCPConnectionEstablished(String message, int port) {
+        for (LoggerObserver observer : observers) {
+            observer.onTCPConnectionEstablished(message, port);
+        }
+    }
+    public void onTCPConnectionLost(String message) {
+        for (LoggerObserver observer : observers) {
+            observer.onTCPConnectionLost(message);
+        }
+    }
 }
