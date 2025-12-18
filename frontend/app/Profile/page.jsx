@@ -46,7 +46,7 @@ export default function Home() {
           <div className="w-full border-t border-gray-200 py-2 flex">
             <Image src="/profile_icon.svg" width={50} height={50} className="rounded-xl bg-gray-200 mr-4 h-12 w-12 p-2" alt="Personal Info Icon"/>
             <div>
-              <Link href="#" className="text-md font-semibold hover:underline">Personal Information</Link>
+              <Link href="PersonalInformation" className="text-md font-semibold hover:underline">Personal Information</Link>
               <p className="text-sm text-gray-500">Update your name, email, and phone</p>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function Home() {
           <div className="w-full border-t border-gray-200 py-2 flex">
             <Image src="/help.svg" width={50} height={50} className="rounded-xl bg-gray-200 mr-4 h-12 w-12 p-2" alt="Profile Picture"/>
             <div>
-              <Link href="#" className="text-md font-semibold hover:underline">Help Center</Link>
+              <Link href="HelpCenter" className="text-md font-semibold hover:underline">Help Center</Link>
               <p className="text-sm text-gray-500">Get help and FAQs</p>
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function Home() {
           <div className="w-full border-t border-gray-200 py-2 flex">
             <Image src="/privacy.svg" width={50} height={50} className="rounded-xl bg-gray-200 mr-4 h-12 w-12 p-2" alt="Profile Picture"/>
             <div>
-              <Link href="#" className="text-md font-semibold hover:underline">Privacy & Terms</Link>
+              <Link href="/Privacy" className="text-md font-semibold hover:underline">Privacy & Terms</Link>
               <p className="text-sm text-gray-500">Review our policies</p>
             </div>
           </div>
