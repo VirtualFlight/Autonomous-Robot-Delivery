@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import NavBar from "../Components/NavBar"
+import ActiveOrderItem from "../Components/ActiveOrderItem"
 
 
 export default function Home() {
@@ -12,35 +13,9 @@ export default function Home() {
         <h1>Active Orders</h1>
         <h2 className="text-black opacity-60">Track your robot deliveries in real-time</h2>
 
-        <div className="p-5 w-full border border-purple-500 h-96">
-            
-            {/* CONTAINER: Robot Status + Timer */}
-            <div className="flex justify-between">
-                {/* Robot Status */}
-                <div className="flex">
-                    <Image src="/location.svg" alt="temp robot icon" width={24} height={24}></Image>
-                    <p>Robot on the way</p>
-                </div>
-
-                {/* Timer */}
-                <div className="flex gap-1">
-                    <Image src="/clock.svg" alt="clock icon" width={18} height={18}></Image>
-                    <p>8 min</p>
-                </div>
-            </div>
-
-            {/* CONTAINER: Restaurant Name + Total */}
-            <div className="flex justify-between">
-                <h3>The Burger Palace</h3>
-                <h3>$24.97</h3>
-            </div>
-
-            <p className="text-base opacity-60">Order #ORD-1240</p>
-            
-            
-
-        </div>
-
+        <ActiveOrderItem restaurantName={"The Burger Place"} orderId={"1240"} cost={24.97} botName={"Bot-03"} eta={"8 mins"} status={"done"} trackerLink={"https://www.google.com/maps/place/The+Burger+Palace/@34.0257435,-118.320002,16z/data=!3m1!4b1!4m6!3m5!1s0x80c2b81470d4fdfb:0xdae0c1b9d713cd98!8m2!3d34.0257435!4d-118.3174217!16s%2Fg%2F11c71mdw8_?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"}/>
+        <ActiveOrderItem restaurantName={"The Burger Place"} orderId={"1240"} cost={24.97} botName={"Bot-03"} eta={"8 mins"} status={"otw"} trackerLink={"https://www.google.com/maps"}/>
+        <ActiveOrderItem restaurantName={"The Burger Place"} orderId={"1240"} cost={24.97} botName={"Bot-03"} eta={"8 mins"} status={"prep"} trackerLink={"https://www.google.com/maps"}/>
       </main>
     </div>
   );
