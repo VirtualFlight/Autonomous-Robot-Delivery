@@ -75,4 +75,13 @@ public class ConsoleLogger implements LoggerObserver {
     public void onMenuItemAdded(String itemName) {
         System.out.println("[" + timestamp() + "] MENU ITEM ADDED: " + itemName);
     }
+
+    @Override
+    public void onTCPConnectionEstablished(String message, int port) {
+        System.out.println("[" + timestamp() + "] TCP CONNECTION ON: " + port + message);
+    }
+    @Override
+    public void onTCPConnectionLost(String message) {
+        System.out.println("[" + timestamp() + "] TCP CONNECTION LOST: " + message);
+    }
 }
