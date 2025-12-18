@@ -177,7 +177,7 @@ function SignupForm() {
                 onChange={(e) => setName(e.target.value)}
                 error={!isNameValid && name}
             />
-
+ 
             <Input
                 label="Email Address"
                 placeholder="you@example.com"
