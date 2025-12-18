@@ -9,14 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -33,6 +34,7 @@ class DeliveryControllerTest {
     private DeliveryService deliveryService;
 
     @Test
+    @WithMockUser
     void createDelivery_success() throws Exception {
         Map<String, Object> request = new HashMap<>();
         request.put("robotId", "R10");
@@ -48,6 +50,7 @@ class DeliveryControllerTest {
         when(deliveryService.createDelivery(any(Map.class))).thenReturn(mockDelivery);
 
         mockMvc.perform(post("/deliveries")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -57,11 +60,13 @@ class DeliveryControllerTest {
     }
 
     @Test
+    @WithMockUser
     void startDelivery_success() throws Exception {
         Long deliveryId = 10L;
         doNothing().when(deliveryService).startDelivery(deliveryId);
 
-        mockMvc.perform(post("/deliveries/{deliveryId}/start", deliveryId))
+        mockMvc.perform(post("/deliveries/{deliveryId}/start", deliveryId)
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Delivery started"));
 
@@ -69,8 +74,8 @@ class DeliveryControllerTest {
     }
 
     @Test
+    @WithMockUser
     void getStats_success() throws Exception {
-
         when(deliveryService.getCompletedCount()).thenReturn(5L);
         when(deliveryService.getFailedCount()).thenReturn(1L);
 

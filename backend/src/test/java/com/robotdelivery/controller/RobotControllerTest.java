@@ -8,14 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,6 +33,7 @@ class RobotControllerTest {
     private RobotService robotService;
 
     @Test
+    @WithMockUser
     void registerRobot_success() throws Exception {
         Map<String, String> request = new HashMap<>();
         request.put("robotId", "R10");
@@ -46,6 +48,7 @@ class RobotControllerTest {
         when(robotService.registerRobot(any(), any())).thenReturn(mockRobot);
 
         mockMvc.perform(post("/robots/register")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -55,6 +58,7 @@ class RobotControllerTest {
     }
 
     @Test
+    @WithMockUser
     void receiveSensorData_success() throws Exception {
         Map<String, Object> sensorData = Map.of(
                 "robotId", "R10",
@@ -64,6 +68,7 @@ class RobotControllerTest {
         );
 
         mockMvc.perform(post("/robots/data")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(sensorData)))
                 .andExpect(status().isOk())
@@ -73,6 +78,7 @@ class RobotControllerTest {
     }
 
     @Test
+    @WithMockUser
     void getRobot_robotFound_success() throws Exception {
         Robot mockRobot = new Robot.RobotBuilder()
                 .robotId("R10")

@@ -4,6 +4,7 @@
 
 package com.robotdelivery.factory;
 
+import com.robotdelivery.model.Delivery;
 import com.robotdelivery.model.Robot;
 import com.robotdelivery.model.SensorData;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,12 @@ import java.util.Map;
 
 @Component
 public class EntityFactory {
+
+    private final RestaurantFactory restaurantFactory;
+
+    public EntityFactory(RestaurantFactory restaurantFactory) {
+        this.restaurantFactory = restaurantFactory;
+    }
 
     public Robot createRobot(String robotId, String name) {
         return new Robot.RobotBuilder()
@@ -96,5 +103,21 @@ public class EntityFactory {
         if (value == null) return false;
         if (value instanceof Boolean) return (Boolean) value;
         return Boolean.parseBoolean(value.toString());
+    }
+
+    public Delivery createDelivery(Robot robot, Integer destX, Integer destY) {
+        return new Delivery.DeliveryBuilder()
+                .robot(robot)
+                .destination(destX, destY)
+                .status(Delivery.DeliveryStatus.PENDING)
+                .build();
+    }
+
+    public Robot createRobotWithPosition(String robotId, Integer x, Integer y) {
+        return new Robot.RobotBuilder()
+                .robotId(robotId)
+                .position(x, y)
+                .status(Robot.RobotStatus.IDLE)
+                .build();
     }
 }
