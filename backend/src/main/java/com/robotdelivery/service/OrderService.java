@@ -42,37 +42,105 @@ public class OrderService {
 
     @Transactional
     public Order createOrder(Map<String, Object> request) {
-        Long customerId = Long.valueOf(request.get("customerId").toString());
-        String deliveryAddress = (String) request.get("deliveryAddress");
-        List<Map<String, Object>> items = (List<Map<String, Object>>) request.get("items");
+        try {
+            // Debug: Print what we received
+            System.out.println("DEBUG - Request received: " + request);
 
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+            // Safely parse customerId
+            Object customerIdObj = request.get("customerId");
+            if (customerIdObj == null) {
+                throw new RuntimeException("customerId is required");
+            }
+            Long customerId;
+            if (customerIdObj instanceof Number) {
+                customerId = ((Number) customerIdObj).longValue();
+            } else if (customerIdObj instanceof String) {
+                customerId = Long.parseLong((String) customerIdObj);
+            } else {
+                throw new RuntimeException("customerId must be a number or string");
+            }
 
-        Order order = restaurantFactory.createOrder(customer, deliveryAddress);
-        order = orderRepository.save(order);
+            String deliveryAddress = (String) request.get("deliveryAddress");
+            if (deliveryAddress == null) {
+                deliveryAddress = "Unknown Address";
+            }
 
-        BigDecimal totalPrice = BigDecimal.ZERO;
-        for (Map<String, Object> itemData : items) {
-            Long menuItemId = Long.valueOf(itemData.get("menuItemId").toString());
-            Integer quantity = (Integer) itemData.get("quantity");
+            // Safely parse items
+            Object itemsObj = request.get("items");
+            if (itemsObj == null || !(itemsObj instanceof List)) {
+                throw new RuntimeException("items must be a list");
+            }
 
-            MenuItem menuItem = menuItemRepository.findById(menuItemId)
-                    .orElseThrow(() -> new RuntimeException("Menu item not found"));
+            List<?> itemsList = (List<?>) itemsObj;
+            System.out.println("DEBUG - Items list: " + itemsList);
 
-            OrderItem orderItem = restaurantFactory.createOrderItem(order, menuItem, quantity);
-            orderItemRepository.save(orderItem);
+            Customer customer = customerRepository.findById(customerId)
+                    .orElseThrow(() -> new RuntimeException("Customer not found with ID: " + customerId));
 
-            BigDecimal itemTotal = menuItem.getPrice().multiply(new BigDecimal(quantity));
-            totalPrice = totalPrice.add(itemTotal);
+            Order order = restaurantFactory.createOrder(customer, deliveryAddress);
+            order = orderRepository.save(order);
+
+            BigDecimal totalPrice = BigDecimal.ZERO;
+
+            for (Object itemObj : itemsList) {
+                if (!(itemObj instanceof Map)) {
+                    continue; // or throw exception
+                }
+
+                Map<?, ?> itemData = (Map<?, ?>) itemObj;
+
+                // Safely parse menuItemId
+                Object menuItemIdObj = itemData.get("menuItemId");
+                if (menuItemIdObj == null) {
+                    throw new RuntimeException("menuItemId is required for each item");
+                }
+                Long menuItemId;
+                if (menuItemIdObj instanceof Number) {
+                    menuItemId = ((Number) menuItemIdObj).longValue();
+                } else if (menuItemIdObj instanceof String) {
+                    menuItemId = Long.parseLong((String) menuItemIdObj);
+                } else {
+                    throw new RuntimeException("menuItemId must be a number or string");
+                }
+
+                // Safely parse quantity
+                Object quantityObj = itemData.get("quantity");
+                if (quantityObj == null) {
+                    throw new RuntimeException("quantity is required for each item");
+                }
+                Integer quantity;
+                if (quantityObj instanceof Number) {
+                    quantity = ((Number) quantityObj).intValue();
+                } else if (quantityObj instanceof String) {
+                    quantity = Integer.parseInt((String) quantityObj);
+                } else {
+                    throw new RuntimeException("quantity must be a number or string");
+                }
+
+                MenuItem menuItem = menuItemRepository.findById(menuItemId)
+                        .orElseThrow(() -> new RuntimeException("Menu item not found with ID: " + menuItemId));
+
+                OrderItem orderItem = restaurantFactory.createOrderItem(order, menuItem, quantity);
+                orderItemRepository.save(orderItem);
+
+                BigDecimal itemTotal = menuItem.getPrice().multiply(new BigDecimal(quantity));
+                totalPrice = totalPrice.add(itemTotal);
+            }
+
+            order.setTotalPrice(totalPrice);
+            order = orderRepository.save(order);
+
+            eventPublisher.notifyOrderCreated(order.getId(), customer.getEmail(), totalPrice);
+
+            return order;
+
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Invalid number format in request: " + e.getMessage(), e);
+        } catch (ClassCastException e) {
+            throw new RuntimeException("Invalid data type in request: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error creating order: " + e.getMessage(), e);
         }
-
-        order.setTotalPrice(totalPrice);
-        order = orderRepository.save(order);
-
-        eventPublisher.notifyOrderCreated(order.getId(), customer.getEmail(), totalPrice);
-
-        return order;
     }
 
     public List<Order> getOrderHistory(Long customerId) {

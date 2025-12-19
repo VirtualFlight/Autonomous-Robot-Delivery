@@ -76,7 +76,11 @@ export default function RestaurantPage() {
         }))
       };
 
-      const response = await axios.post(`${API_BASE_URL}/orders`, orderData);
+      const response = await axios.post(`${API_BASE_URL}/orders`, orderData, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
       const order = response.data;
 
       setActiveOrders(prev => prev + 1);
