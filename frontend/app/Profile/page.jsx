@@ -23,7 +23,7 @@ export default function Home() {
             </div>
         </div>
 
-        <div className="bg-white w-full border-2 border-gray-200 rounded-xl pt-2 px-4">
+        <div className="bg-white w-full border-2 border-gray-200 rounded-xl pt-2 px-4 hover:shadow-lg duration-400">
           <div className="w-full pb-2">
             <p className="text-2xl font-semibold">Account Settings</p>
           </div>
@@ -53,7 +53,7 @@ export default function Home() {
           </div>
         </div>
         
-        <div className="bg-white w-full border-2 border-gray-200 rounded-xl pt-2 px-4">
+        <div className="bg-white w-full border-2 border-gray-200 rounded-xl pt-2 px-4 hover:shadow-lg duration-400">
           <div className="w-full pb-2">
             <p className="text-2xl font-semibold">Support & Legal</p>
           </div>

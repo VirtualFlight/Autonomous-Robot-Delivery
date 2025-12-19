@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function ActiveOrderItem({restaurantName, orderId, cost, botName, eta, status, trackerLink}) {
   return (
-    <div className="border-t-8 border-[#8908EC] rounded-2xl flex flex-col h-72">
+    <div className="border-t-8 border-[#8908EC] rounded-2xl flex flex-col h-72 hover:scale-101 hover:shadow-lg duration-300">
     <div className="p-5 w-full border-2 h-72 rounded-lg border-[#8908EC] flex flex-col justify-between">     
         {/* CONTAINER: Robot Status + Timer */}
         <div className="flex justify-between">

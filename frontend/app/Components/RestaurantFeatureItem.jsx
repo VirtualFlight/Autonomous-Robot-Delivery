@@ -67,7 +67,7 @@ export { restaurantPool };
 
 export default function RestaurantFeatureItem({ restaurant, onQuickOrder }) {
     return (
-        <div className="flex border-2 border-black/20 rounded-2xl overflow-hidden bg-white">
+        <div className="flex border-2 border-black/20 rounded-2xl overflow-hidden bg-white hover:scale-102 hover:shadow-lg duration-300">
             <div className="w-2/5 bg-gray-200">
                 {restaurant.image ? (
                     <Image

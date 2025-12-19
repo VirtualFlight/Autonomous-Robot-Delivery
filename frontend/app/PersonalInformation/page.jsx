@@ -38,9 +38,9 @@ export default function PersonalInformation() {
         </div>
 
         {/* Main Content Container */}
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-8 ">
           {/* Left Column - Personal Information Form */}
-          <div className="lg:w-2/3">
+          <div className="lg:w-2/3 hover:scale-101 duration-300">
             <div className="bg-white shadow rounded-lg p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">
                 Personal Information
@@ -151,12 +151,12 @@ export default function PersonalInformation() {
 
               {/* Form Actions */}
               <div className="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-200">
-                <button className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                <Link href="../Profile" className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                   Cancel
-                </button>
-                <button className="px-6 py-2 bg-blue-600 border border-transparent rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                </Link>
+                <Link href="../Profile" className="px-6 py-2 bg-blue-600 border border-transparent rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                   Save Changes
-                </button>
+                </Link>
               </div>
             </div>
           </div>

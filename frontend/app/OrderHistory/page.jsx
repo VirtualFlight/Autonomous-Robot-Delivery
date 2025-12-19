@@ -7,11 +7,9 @@ import { useState, useMemo } from "react";
 
 export default function Home() {
     const [orders, setOrders] = useState([ //ORDERS HERE
-      { item: "Green Bowl", cost: 44.61, id: "ORD-1240", time: "2 days", tags: ["Ceaser Salad", "Greek Salad"], stars: 2 },
-      { item: "Pickle Burger", cost: 12.67, id: "ORD-8913", time: "1 week", tags: ["Pickles", "Hamburger", "Halal"], stars: 5 },
-      { item: "Pickle Burger", cost: 12.67, id: "ORD-8912", time: "1 week", tags: ["Pickles", "Hamburger", "Halal"], stars: 3 },
-      { item: "Pickle Burger", cost: 12.67, id: "ORD-8911", time: "1 week", tags: ["Pickles", "Hamburger", "Halal"], stars: 1 },
-      { item: "Pickle Burger", cost: 10.41, id: "ORD-6820", time: "2 years", tags: ["Pickles", "Hamburger", "Halal"], stars: 0 }
+      { item: "Green Bowl", cost: 44.61, id: "ORD-1240", time: "2 days", tags: ["Ceaser Salad", "Greek Salad"], stars: 0 },
+      { item: "Pickle Burger", cost: 12.67, id: "ORD-8913", time: "1 week", tags: ["Pickles", "Hamburger", "Halal"], stars: 0 },
+      { item: "Pickle Burger", cost: 10.41, id: "ORD-6820", time: "2 years", tags: ["Pickles", "Hamburger", "Halal"], stars: 5 }
     ]);
 
     const [reorders, setReorders] = useState([]);
@@ -76,15 +74,15 @@ export default function Home() {
         <h1>Order History</h1>
         <h2 className="text-gray-500">View your past deliveries and reorder favourites</h2>
         <div className="flex h-1/5 w-full gap-8">
-          <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between">
+          <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between hover:scale-102 hover:shadow-md duration-300">
             <p className="text-gray-500 text-2xl">Total Orders</p>
             <p className="text-3xl">{stats.totalOrders}</p>
           </div>
-          <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between">
+          <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between hover:scale-102 shadow-md duration-300">
             <p className="text-gray-500 text-2xl">Total Spent</p>
             <p className="text-3xl">${stats.totalSpent.toFixed(2)}</p>
           </div>
-          <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between">
+          <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-between hover:scale-102 shadow-md duration-300">
             <p className="text-gray-500 text-2xl">Avg Rating</p>
             <div className="flex items-center">
               <p className="text-3xl">{stats.avgRating}</p>
@@ -109,7 +107,7 @@ export default function Home() {
           ))}
         </div>
           
-          {/* REMOVE LATER */}
+          {/* FOR DEBUGGING */}
         {/* <details className="mt-8 p-4 bg-gray-100 rounded-lg">
           <summary className="font-bold cursor-pointer">Debug Info (Click to view)</summary>
           <div className="mt-2">

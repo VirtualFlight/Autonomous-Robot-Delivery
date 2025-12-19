@@ -13,10 +13,24 @@ export default function Home() {
       <NavBar/>
 
       <main className="ml-[25%] flex flex-col p-8 gap-4 w-full">
-        <div className="flex justify-between">
+        <Link href="Profile" className="text-blue-600 hover:text-blue-800 flex items-center">
+            <svg
+              className="w-4 h-4 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Back to Profile
+          </Link>
             <h1>Privacy & Terms</h1>
-            <Link href="/Profile" className="text-gray-500 hover:underline text-md font-semibold">Back to Profile</Link>
-        </div>
         <h2 className="text-gray-500">Our commitment to your privacy and security</h2>
        
        <div className="w-full h-12 flex items-end border-b-2 border-black/20">

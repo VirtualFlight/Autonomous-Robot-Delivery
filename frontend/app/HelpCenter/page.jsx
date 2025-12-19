@@ -9,6 +9,7 @@ import NavBar from "../Components/NavBar";
 
 export default function PersonalInformation() {
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [heights, setHeights] = useState({});
 
   const faqItems = [
     { 
@@ -96,13 +97,13 @@ export default function PersonalInformation() {
                     <div key={item.id} className="border border-gray-200 rounded-lg overflow-hidden">
                       <button
                         onClick={() => toggleDropdown(item.id)}
-                        className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+                        className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition-all duration-300 text-left"
                       >
                         <span className="font-medium text-gray-800">
                           {item.title}
                         </span>
                         <svg
-                          className={`w-5 h-5 text-gray-600 transition-transform ${openDropdown === item.id ? 'rotate-180' : ''}`}
+                          className={`w-5 h-5 text-gray-600 transition-all duration-400 ${openDropdown === item.id ? 'rotate-180' : ''}`}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -117,13 +118,20 @@ export default function PersonalInformation() {
                         </svg>
                       </button>
                       
-                      {openDropdown === item.id && (
+                      {/* Animated Dropdown Content */}
+                      <div 
+                        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                          openDropdown === item.id 
+                            ? 'max-h-96 opacity-100' 
+                            : 'max-h-0 opacity-0'
+                        }`}
+                      >
                         <div className="p-4 bg-white border-t border-gray-200">
-                          <p className="text-gray-600">
+                          <p className="text-gray-600 animate-fadeIn">
                             {item.content}
                           </p>
                         </div>
-                      )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -133,22 +141,54 @@ export default function PersonalInformation() {
               <div className="border-t border-gray-200 my-6"></div>
 
               {/* Contact Support Section */}
-              <div className="text-center bg-linear-to-r from-[#8908EC] to-[#4E0586] rounded-xl p-6">
+              <div className="text-center bg-linear-to-r from-[#8908EC] to-[#4E0586] rounded-xl p-6 animate-slideUp">
                 <h3 className="text-lg font-semibold text-white mb-2">
                   Still need help?
                 </h3>
                 <p className="text-white mb-6">
                   Our support team is available 24/7 to assist you
                 </p>
-                <button className="px-6 py-3 border border-gray-700 bg-white-400 font-medium rounded-lg hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <button className="px-6 py-3 bg-white text-[#8908EC] font-medium rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
                   Contact Support
                 </button>
               </div>
             </div>
           </div>
-
         </div>
       </div>
+
+      {/* Add custom animations to global CSS or use a style tag */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+        
+        .animate-slideUp {
+          animation: slideUp 0.6s ease-out;
+        }
+      `}</style>
     </div>
   );
 }

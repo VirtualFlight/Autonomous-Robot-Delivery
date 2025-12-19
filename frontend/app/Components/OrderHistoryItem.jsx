@@ -25,7 +25,7 @@ export default function OrderHistoryItem({item, id, cost, time, tags, initialSta
 
   return (
     <div>
-        <div className=" w-full h-full">
+        <div className=" w-full h-full hover:scale-101 hover:shadow-sm duration-300">
           <div className="flex flex-col border-2 border-gray-200 bg-white w-full h-48 rounded-xl pt-4 pl-4 pr-4 pb-2">
             <div className="flex"> {/* TOP ITEM INFO */}
               <div className="flex w-full gap-4">
