@@ -84,35 +84,4 @@ public class ConsoleLogger implements LoggerObserver {
     public void onTCPConnectionLost(String message) {
         System.out.println("[" + timestamp() + "] TCP CONNECTION LOST: " + message);
     }
-
-    @Override
-    public void onCustomerRegistered(String email, String name) {
-        System.out.println("[" + timestamp() + "] CUSTOMER REGISTERED: " + email + " (" + name + ")");
-    }
-
-    @Override
-    public void onCustomerLogin(String email) {
-        System.out.println("[" + timestamp() + "] LOGIN: " + email);
-    }
-
-    @Override
-    public void onProfileUpdated(String email) {
-        System.out.println("[" + timestamp() + "] PROFILE UPDATED: " + email);
-    }
-
-    @Override
-    public void onOrderCreated(Long orderId, String customerEmail, BigDecimal total) {
-        System.out.println("[" + timestamp() + "]  ORDER CREATED: ID=" + orderId +
-                " Customer=" + customerEmail + " Total=$" + total);
-    }
-
-    @Override
-    public void onOrderStatusChanged(Long orderId, String status) {
-        System.out.println("[" + timestamp() + "] RDER STATUS: ID=" + orderId + " -> " + status);
-    }
-
-    @Override
-    public void onMenuItemAdded(String itemName) {
-        System.out.println("[" + timestamp() + "] MENU ITEM ADDED: " + itemName);
-    }
 }
