@@ -249,10 +249,10 @@ function SignupForm() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [postalCode, setPostalCode] = useState("");
+    // const [phoneNumber, setPhoneNumber] = useState("");
+    // const [address, setAddress] = useState("");
+    // const [city, setCity] = useState("");
+    // const [postalCode, setPostalCode] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -281,10 +281,10 @@ function SignupForm() {
                     password,
                     firstName,
                     lastName,
-                    phoneNumber: phoneNumber || null,
-                    address: address || null,
-                    city: city || null,
-                    postalCode: postalCode || null,
+                    // phoneNumber: phoneNumber || null,
+                    // address: address || null,
+                    // city: city || null,
+                    // postalCode: postalCode || null,
                 }),
             });
 
@@ -353,7 +353,7 @@ function SignupForm() {
                 helper="Include an uppercase and lowercase letter. Minimum 8 characters."
             />
 
-            <Input
+            {/* <Input
                 label="Phone Number (Optional)"
                 placeholder="+1 (555) 123-4567"
                 value={phoneNumber}
@@ -380,7 +380,7 @@ function SignupForm() {
                     value={postalCode}
                     onChange={(e) => setPostalCode(e.target.value)}
                 />
-            </div>
+            </div> */}
 
             <PrimaryButton
                 text={loading ? "Creating account..." : "Sign up →"}

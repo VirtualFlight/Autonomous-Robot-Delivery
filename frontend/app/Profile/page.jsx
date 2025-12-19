@@ -23,7 +23,7 @@ export default function Home() {
             </div>
         </div>
 
-        <div className="flex h-1/5 w-full gap-12">
+        {/* <div className="flex h-1/5 w-full gap-12">
           <div className="flex flex-col rounded-xl border-2 border-gray-200 bg-white h-36 w-1/3 p-6 justify-around items-center ">
             <p className="text-4xl font-semibold">6</p>
             <p className="text-gray-500 text-xl">Orders</p>
@@ -36,7 +36,7 @@ export default function Home() {
             <p className="text-4xl font-semibold">2.8</p>
             <p className="text-gray-500 text-xl">Avg Rating</p>
           </div>
-        </div>
+        </div> */}
 
         <div className="bg-white w-full border-2 border-gray-200 rounded-xl pt-2 px-4">
           <div className="w-full pb-2">

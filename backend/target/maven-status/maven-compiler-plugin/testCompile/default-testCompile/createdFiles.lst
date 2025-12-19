@@ -1,0 +1,4 @@
+com\robotdelivery\factory\RestaurantFactoryTest.class
+com\robotdelivery\model\RobotModelTest.class
+com\robotdelivery\factory\EntityFactoryTest.class
+com\robotdelivery\observer\EventPublisherTest.class
