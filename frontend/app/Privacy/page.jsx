@@ -37,7 +37,7 @@ export default function Home() {
             {/* Privacy Tab */}
             <button 
               onClick={() => setActiveTab("privacy")}
-              className={`w-1/6 h-2/3 justify-center flex items-center cursor-pointer transition-all ${
+              className={`w-1/6 h-full justify-center flex items-center cursor-pointer transition-all ${
                 activeTab === "privacy" 
                   ? "border-b-2 border-[#2D35C9] text-[#2D35C9]" 
                   : "text-gray-500 hover:text-gray-700"
@@ -56,7 +56,7 @@ export default function Home() {
             {/* Terms Tab */}
             <button 
               onClick={() => setActiveTab("terms")}
-              className={`w-1/6 h-2/3 justify-center flex items-center cursor-pointer transition-all ${
+              className={`w-1/6 h-full justify-center flex items-center cursor-pointer transition-all ${
                 activeTab === "terms" 
                   ? "border-b-2 border-[#2D35C9] text-[#2D35C9]" 
                   : "text-gray-500 hover:text-gray-700"
