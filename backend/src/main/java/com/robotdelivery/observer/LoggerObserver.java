@@ -12,6 +12,15 @@ public interface LoggerObserver {
     void onDeliveryCreated(Long deliveryId, String robotId);
     void onDeliveryCompleted(Long deliveryId);
     void onError(String message);
+    void onTCPConnectionLost(String message);
+    void onTCPConnectionEstablished(String message, int port);
+
+    void onCustomerRegistered(String email, String name);
+    void onCustomerLogin(String email);
+    void onProfileUpdated(String email);
+    void onOrderCreated(Long orderId, String customerEmail, BigDecimal total);
+    void onOrderStatusChanged(Long orderId, String status);
+    void onMenuItemAdded(String itemName);
 
     void onCustomerRegistered(String email, String name);
     void onCustomerLogin(String email);

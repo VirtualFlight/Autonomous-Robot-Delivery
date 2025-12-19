@@ -8,8 +8,8 @@ import com.robotdelivery.factory.EntityFactory;
 import com.robotdelivery.model.Robot;
 import com.robotdelivery.model.SensorData;
 import com.robotdelivery.observer.EventPublisher;
-import com.robotdelivery.repository.RobotRepository;
-import com.robotdelivery.repository.SensorDataRepository;
+import com.robotdelivery.repositorys.RobotRepository;
+import com.robotdelivery.repositorys.SensorDataRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,23 +44,44 @@ public class RobotService {
 
     public void processSensorData(Map<String, Object> sensorData) {
         String robotId = (String) sensorData.get("robotId");
-        Integer x = (Integer) sensorData.get("positionX");
-        Integer y = (Integer) sensorData.get("positionY");
-        Integer battery = (Integer) sensorData.get("batteryLevel");
 
         Robot robot = robotRepository.findByRobotId(robotId)
-                .orElseThrow(() -> new RuntimeException("Robot not found"));
+                .orElseGet(() -> {
+                    System.out.println("[RobotService] Robot not found, auto-registering: " + robotId);
+                    return registerRobot(robotId, robotId);
+                });
 
-        robot.setCurrentX(x);
-        robot.setCurrentY(y);
-        robot.setBatteryLevel(battery);
+        Integer x = getIntegerValue(sensorData, "positionX");
+        Integer y = getIntegerValue(sensorData, "positionY");
+        Integer battery = getIntegerValue(sensorData, "batteryLevel");
+
+        if (x != null) robot.setCurrentX(x);
+        if (y != null) robot.setCurrentY(y);
+        if (battery != null) robot.setBatteryLevel(battery);
+
         robot.setLastHeartbeat(LocalDateTime.now());
         robotRepository.save(robot);
 
         SensorData data = entityFactory.createSensorData(robot, sensorData);
         sensorDataRepository.save(data);
 
-        eventPublisher.notifySensorDataReceived(robotId, x, y);
+        String position = (x != null && y != null) ?
+                String.format("(%d,%d)", x, y) : "position unknown";
+        eventPublisher.notifySensorDataReceived(robotId, x != null ? x : 0, y != null ? y : 0);
+
+        System.out.println("[RobotService] Processed data for " + robotId + " at " + position);
+    }
+
+    private Integer getIntegerValue(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value == null) return null;
+        if (value instanceof Integer) return (Integer) value;
+        if (value instanceof Number) return ((Number) value).intValue();
+        try {
+            return Integer.parseInt(value.toString());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     public Robot getRobot(String robotId) {

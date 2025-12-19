@@ -25,7 +25,16 @@ CREATE TABLE sensor_data (
     battery_level INT NOT NULL DEFAULT 100,
     timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (robot_id) REFERENCES robots(id) ON DELETE CASCADE,
-    INDEX idx_robot_timestamp (robot_id, timestamp)
+    INDEX idx_robot_timestamp (robot_id, timestamp),
+    distance_left DOUBLE NOT NULL DEFAULT 0,
+    distance_middle DOUBLE NOT NULL DEFAULT 0,
+    distance_right DOUBLE NOT NULL DEFAULT 0,
+    accel_x DOUBLE NOT NULL DEFAULT 0,
+    accel_y DOUBLE NOT NULL DEFAULT 0,
+    accel_z DOUBLE NOT NULL DEFAULT 0,
+    gyro_x DOUBLE NOT NULL DEFAULT 0,
+    gyro_y DOUBLE NOT NULL DEFAULT 0,
+    gyro_z DOUBLE NOT NULL DEFAULT 0
 );
 
 CREATE TABLE deliveries (

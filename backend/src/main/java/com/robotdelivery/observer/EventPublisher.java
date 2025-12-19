@@ -87,4 +87,51 @@ public class EventPublisher {
             observer.onMenuItemAdded(itemName);
         }
     }
+
+    public void onTCPConnectionEstablished(String message, int port) {
+        for (LoggerObserver observer : observers) {
+            observer.onTCPConnectionEstablished(message, port);
+        }
+    }
+    public void onTCPConnectionLost(String message) {
+        for (LoggerObserver observer : observers) {
+            observer.onTCPConnectionLost(message);
+        }
+    }
+
+    public void notifyCustomerRegistered(String email, String name) {
+        for (LoggerObserver observer : observers) {
+            observer.onCustomerRegistered(email, name);
+        }
+    }
+
+    public void notifyCustomerLogin(String email) {
+        for (LoggerObserver observer : observers) {
+            observer.onCustomerLogin(email);
+        }
+    }
+
+    public void notifyProfileUpdated(String email) {
+        for (LoggerObserver observer : observers) {
+            observer.onProfileUpdated(email);
+        }
+    }
+
+    public void notifyOrderCreated(Long orderId, String customerEmail, BigDecimal total) {
+        for (LoggerObserver observer : observers) {
+            observer.onOrderCreated(orderId, customerEmail, total);
+        }
+    }
+
+    public void notifyOrderStatusChanged(Long orderId, String status) {
+        for (LoggerObserver observer : observers) {
+            observer.onOrderStatusChanged(orderId, status);
+        }
+    }
+
+    public void notifyMenuItemAdded(String itemName) {
+        for (LoggerObserver observer : observers) {
+            observer.onMenuItemAdded(itemName);
+        }
+    }
 }

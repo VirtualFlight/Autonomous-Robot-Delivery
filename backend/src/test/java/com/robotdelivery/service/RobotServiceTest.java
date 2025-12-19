@@ -4,8 +4,8 @@ import com.robotdelivery.factory.EntityFactory;
 import com.robotdelivery.model.Robot;
 import com.robotdelivery.model.SensorData;
 import com.robotdelivery.observer.EventPublisher;
-import com.robotdelivery.repository.RobotRepository;
-import com.robotdelivery.repository.SensorDataRepository;
+import com.robotdelivery.repositorys.RobotRepository;
+import com.robotdelivery.repositorys.SensorDataRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,9 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 

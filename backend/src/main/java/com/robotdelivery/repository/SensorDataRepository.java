@@ -2,7 +2,7 @@
  * Author: Jahiem Allen
  */
 
-package com.robotdelivery.repository;
+package com.robotdelivery.repositorys;
 
 import com.robotdelivery.model.Robot;
 import com.robotdelivery.model.SensorData;
