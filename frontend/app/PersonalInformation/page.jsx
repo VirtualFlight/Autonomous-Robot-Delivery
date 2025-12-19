@@ -42,7 +42,7 @@ export default function PersonalInformation() {
           {/* Left Column - Personal Information Form */}
           <div className="lg:w-2/3">
             <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
                 Personal Information
               </h2>
               <p className="text-gray-600 mb-8">Update your account details</p>
