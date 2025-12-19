@@ -16,7 +16,7 @@ CREATE TABLE robots (
 
 CREATE TABLE sensor_data (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    robot_id BIGINT NOT NULL,
+    robot_id BIGINT NOT NULL,A
     position_x INT NOT NULL DEFAULT 0,
     position_y INT NOT NULL DEFAULT 0,
     left_obstacle BOOLEAN NOT NULL DEFAULT FALSE,
