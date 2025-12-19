@@ -22,10 +22,4 @@ public interface LoggerObserver {
     void onOrderStatusChanged(Long orderId, String status);
     void onMenuItemAdded(String itemName);
 
-    void onCustomerRegistered(String email, String name);
-    void onCustomerLogin(String email);
-    void onProfileUpdated(String email);
-    void onOrderCreated(Long orderId, String customerEmail, BigDecimal total);
-    void onOrderStatusChanged(Long orderId, String status);
-    void onMenuItemAdded(String itemName);
 }
