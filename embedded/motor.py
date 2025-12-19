@@ -15,8 +15,8 @@ class Motor:
         GPIO.output(self.right, GPIO.HIGH)        
     
     def backward(self):
-        GPIO.output(self.left, GPIO.LOW)
-        GPIO.output(self.right, GPIO.HIGH)
+        GPIO.output(self.left, GPIO.HIGH)
+        GPIO.output(self.right, GPIO.LOW)
 
     def move(self, left, right):
         '''
@@ -32,8 +32,8 @@ class Motor:
         GPIO.output(self.right, GPIO.LOW)
 
 if __name__ == '__main__':
-    motor = Motor(1,2)
-    motor2 = Motor(3,4)
+    motor = Motor(13,6)
+    motor2 = Motor(5,16)
 
     try:
         print("Forward")
@@ -41,12 +41,12 @@ if __name__ == '__main__':
         motor2.forward()
         time.sleep(2)
         
+        print("Backward")
+        motor.backward()
+        motor2.backward()
+        time.sleep(2)
+
         motor.stop()
         motor2.stop()
     finally:
         GPIO.cleanup()
-    
-    test = GPIO.LOW
-    test1 = "hello"
-
-    motor.move(test, test1)
