@@ -26,7 +26,7 @@ export default function ActiveOrderItem({restaurantName, orderId, cost, botName,
                 </div>
             ) : (
                 <div className="flex rounded-xl bg-[#FF0000]/20 px-3 py-1 gap-2 border border-red-500">
-                    <Image src="/location.svg" alt="robot icon" width={24} height={24} className="filter hue-rotate-90 brightness-95 contrast-90"/>
+                    <Image src="/location.svg" alt="robot icon" width={24} height={24} className="opacity-50"/>
                     <p className="text-[#ad0202] font-medium">Error</p>
                 </div>
             )}

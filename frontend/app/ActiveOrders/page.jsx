@@ -6,10 +6,10 @@ import ActiveOrderItem from "../Components/ActiveOrderItem"
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen bg-zinc-50 font-sans p-4">
+    <div className="flex min-h-screen bg-zinc-50 font-sans pt-0 p-4">
       <NavBar/>
 
-      <main className="ml-[25%] flex flex-col p-8 gap-4 w-full border">
+      <main className="ml-[25%] flex flex-col p-8 gap-4 w-full">
         <h1>Active Orders</h1>
         <h2 className="text-black opacity-60">Track your robot deliveries in real-time</h2>
 

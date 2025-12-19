@@ -39,9 +39,7 @@ export default function NavBar() {
               className="text-xl w-8 h-8"
             />
             <span className="font-medium text-lg">Active Orders</span>
-            <span className="ml-auto bg-red-500 text-white text-xs px-2.5 py-1.5 rounded-full">
-              67
-            </span>
+            {/* <span className="ml-auto bg-red-500 text-white text-xs px-2.5 py-1.5 rounded-full">67</span> */}
           </Link>
 
           <Link

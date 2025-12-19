@@ -1,11 +1,28 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import NavBar from "../Components/NavBar"
+import { useState, useEffect } from "react";
 
-export default function OrderHistoryItem({item, id, cost, time, tags, stars}) {
+export default function OrderHistoryItem({item, id, cost, time, tags, initialStars, onReorder, onStarUpdate}) {
+  const [stars, setStars] = useState(initialStars);
   
+  const handleStarClick = (clickedStar) => {
+    const newStars = clickedStar === stars ? 0 : clickedStar;
+    setStars(clickedStar === stars ? 0 : clickedStar); //calculate star value
+    if (onStarUpdate) {onStarUpdate(newStars);};
+  };
+
+  useEffect(() => { //update star val
+    setStars(initialStars);
+  }, [initialStars]);
+
+  const handleReorderClick = () => { //when reorder button is clicked
+    const orderData = {item, id, cost: Number(cost), time, tags: [...tags], stars, originalOrder: {item, id, cost, time, tags}};
+    
+    if (onReorder) {onReorder(orderData);} // call parent
+  };
+  
+
   return (
     <div>
         <div className=" w-full h-full">
@@ -32,25 +49,39 @@ export default function OrderHistoryItem({item, id, cost, time, tags, stars}) {
             <div className="flex h-full border-t border-gray-200 mt-4 p-2 justify-between"> {/* RATING & REORDER */}
               <div className="flex items-center">
                 <p className="text-sm">Your Rating: </p>
-                <div className="flex ml-2">
+                <div className="flex ml-2 items-center">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <Image
+                    <button
                       key={star}
-                      src="/star.svg"
-                      width={20}
-                      height={20}
-                      alt="star"
-                      className={`w-5 h-5 ml-1 ${
-                        star <= stars ? "" : "grayscale"
-                      }`}
-                    />
+                      type="button"
+                      onClick={() => handleStarClick(star)}
+                      className="p-1 hover:scale-120 transition-transform duration-200"
+                      aria-label={`Rate ${star} star${star !== 1 ? 's' : ''}`}
+                    >
+                      <Image
+                        src="/star.svg"
+                        width={20}
+                        height={20}
+                        alt={`Star ${star}`}
+                        className={`w-5 h-5 ${
+                          star <= stars ? "" : "grayscale opacity-80"
+                        }`}
+                      />
+                    </button>
                   ))}
+                  {/* Optional: Show the current rating value */}
+                  <span className="ml-2 text-sm text-gray-600">
+                    ({stars > 0 ? `${stars}/5` : "Not rated"})
+                  </span>
                 </div>
               </div>
-              <Link href="../ActiveOrders" className="flex gap-2 bg-[#2D35C9]/5 justify-center items-center p-2 w-36 h-full rounded-xl hover:bg-[#2D35C9]/15 duration-200 ">
-                <Image src="redo.svg" height={50} width={50} alt="star" className=" w-6 h-6"/>
+              <button 
+                onClick={handleReorderClick}
+                className="flex gap-2 bg-[#2D35C9]/5 justify-center items-center p-2 w-36 h-full rounded-xl hover:bg-[#2D35C9]/15 duration-200"
+              >
+                <Image src="redo.svg" height={50} width={50} alt="reorder icon" className="w-6 h-6"/>
                 <p className="text-xl text-[#2D35C9]/90">Reorder</p>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
