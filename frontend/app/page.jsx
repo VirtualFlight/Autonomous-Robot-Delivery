@@ -4,7 +4,8 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import axios from "axios";
+
+const API_BASE_URL = "http://localhost:8080/api/customers";
 
 export default function LoginPage() {
     const [isSignup, setIsSignup] = useState(false);
@@ -136,81 +137,204 @@ export default function LoginPage() {
 /* ---------------- FORMS ---------------- */
 
 function LoginForm() {
+    const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
+
+    const isEmailValid = email.includes("@") && email.length > 0;
+    const isPasswordValid = password.length >= 8;
+    const isFormValid = isEmailValid && isPasswordValid;
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        if (!isFormValid) return;
+
+        setLoading(true);
+        setError("");
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Invalid email or password");
+            }
+
+            const customer = await response.json();
+
+            // Store customer data
+            const storage = rememberMe ? localStorage : sessionStorage;
+            storage.setItem("customer", JSON.stringify(customer));
+            storage.setItem("customerId", customer.id.toString());
+
+            router.push("/Restaurant");
+        } catch (err) {
+            console.error("Login error:", err);
+            setError(err.message || "An error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    if (showForgotPassword) {
+        return <ForgotPasswordForm onBack={() => setShowForgotPassword(false)} />;
+    }
+
     return (
         <>
-            <Input label="Email Address" placeholder="you@example.com" />
-            <Input label="Password" placeholder="••••••••" type="password"/>
+            {error && (
+                <div className="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    {error}
+                </div>
+            )}
+
+            <Input
+                label="Email Address"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={!isEmailValid && email}
+            />
+            <Input
+                label="Password"
+                placeholder="••••••••"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={!isPasswordValid && password}
+            />
 
             <div className="flex justify-between items-center text-base mb-10">
                 <label className="flex items-center gap-3 text-gray-600">
                     <input
                         type="checkbox"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
                         className="rounded border-gray-300 text-purple-600 focus:ring-purple-500 w-5 h-5"
                     />
                     Remember me
                 </label>
-                <a
-                    href="#"
+                <button
+                    onClick={() => setShowForgotPassword(true)}
                     className="text-purple-600 hover:text-purple-800 font-medium"
                 >
                     Forgot password?
-                </a>
+                </button>
             </div>
 
-            <Link href="/Restaurant">
-                <PrimaryButton text="Sign in →" />
-            </Link>
+            <PrimaryButton
+                text={loading ? "Signing in..." : "Sign in →"}
+                onClick={handleLogin}
+                disabled={!isFormValid || loading}
+            />
 
             <Terms />
         </>
     );
 }
 
-// Sign up form
-
 function SignupForm() {
     const router = useRouter();
 
-    const [name, setName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setloading] = useState(false)
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [postalCode, setPostalCode] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    // ---- VALIDATION RULES ----
-    const isNameValid = name.trim().length >= 2;
-    const isEmailValid = email.includes("@");
+    const isNameValid = firstName.trim().length >= 2;
+    const isEmailValid = email.includes("@") && email.length > 0;
     const isPasswordValid =
         password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password);
 
     const isFormValid = isNameValid && isEmailValid && isPasswordValid;
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
+        e.preventDefault();
         if (!isFormValid) return;
 
-        e.preventDefault();
-        setloading(true)
+        setLoading(true);
+        setError("");
 
         try {
-            axios.post("http://localhost:8080/api/customers/register", {
-                email,
-                password
-            })
+            const response = await fetch(`${API_BASE_URL}/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+                    phoneNumber: phoneNumber || null,
+                    address: address || null,
+                    city: city || null,
+                    postalCode: postalCode || null,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText || "Registration failed");
+            }
+
+            const customer = await response.json();
+
+            localStorage.setItem("customer", JSON.stringify(customer));
+            localStorage.setItem("customerId", customer.id.toString());
+
+            router.push("/Restaurant");
+        } catch (err) {
+            console.error("Registration error:", err);
+            if (err.message.includes("already exists")) {
+                setError("Email already exists. Please use a different email or login.");
+            } else {
+                setError("An error occurred during registration. Please try again.");
+            }
         } finally {
-            setloading(false)
-            router.push("/Restaurant")
+            setLoading(false);
         }
     }
 
     return (
         <>
-            <Input
-                label="Full Name"
-                placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                error={!isNameValid && name}
-            />
- 
+            {error && (
+                <div className="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    {error}
+                </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-4">
+                <Input
+                    label="First Name"
+                    placeholder="John"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    error={!isNameValid && firstName}
+                />
+                <Input
+                    label="Last Name"
+                    placeholder="Doe"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                />
+            </div>
+
             <Input
                 label="Email Address"
                 placeholder="you@example.com"
@@ -226,12 +350,41 @@ function SignupForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 error={!isPasswordValid && password}
-                helper="Include an uppercase and lowercase letter. Mininum 8 characters."
+                helper="Include an uppercase and lowercase letter. Minimum 8 characters."
             />
 
+            <Input
+                label="Phone Number (Optional)"
+                placeholder="+1 (555) 123-4567"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+
+            <Input
+                label="Address (Optional)"
+                placeholder="123 Main Street"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+                <Input
+                    label="City (Optional)"
+                    placeholder="Toronto"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                />
+                <Input
+                    label="Postal Code (Optional)"
+                    placeholder="M5H 2N2"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                />
+            </div>
+
             <PrimaryButton
-                text="Sign up →"
-                disabled={!isFormValid}
+                text={loading ? "Creating account..." : "Sign up →"}
+                disabled={!isFormValid || loading}
                 onClick={handleSubmit}
             />
 
@@ -242,6 +395,99 @@ function SignupForm() {
             </div>
 
             <Terms />
+        </>
+    );
+}
+
+function ForgotPasswordForm({ onBack }) {
+    const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState("");
+
+    const isEmailValid = email.includes("@") && email.length > 0;
+
+    async function handleForgotPassword(e) {
+        e.preventDefault();
+        if (!isEmailValid) return;
+
+        setLoading(true);
+        setError("");
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/forgot-password`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to send reset email");
+            }
+
+            setSuccess(true);
+        } catch (err) {
+            console.error("Forgot password error:", err);
+            setError("An error occurred. Please try again or contact support.");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    if (success) {
+        return (
+            <div className="text-center">
+                <div className="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                    Password reset instructions have been sent to your email.
+                </div>
+                <button
+                    onClick={onBack}
+                    className="text-purple-600 hover:text-purple-800 font-medium"
+                >
+                    ← Back to login
+                </button>
+            </div>
+        );
+    }
+
+    return (
+        <>
+            <div className="mb-6">
+                <button
+                    onClick={onBack}
+                    className="text-purple-600 hover:text-purple-800 font-medium flex items-center gap-2"
+                >
+                    ← Back to login
+                </button>
+            </div>
+
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Reset Password</h2>
+            <p className="text-gray-600 mb-6">
+                Enter your email address and we'll send you instructions to reset your
+                password.
+            </p>
+
+            {error && (
+                <div className="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    {error}
+                </div>
+            )}
+
+            <Input
+                label="Email Address"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={!isEmailValid && email}
+            />
+
+            <PrimaryButton
+                text={loading ? "Sending..." : "Send Reset Link"}
+                onClick={handleForgotPassword}
+                disabled={!isEmailValid || loading}
+            />
         </>
     );
 }
