@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -8,6 +8,8 @@ import axios from "axios";
 
 export default function LoginPage() {
     const [isSignup, setIsSignup] = useState(false);
+    const [direction, setDirection] = useState("right");
+    const containerRef = useRef(null);
 
     return (
         <div className="min-h-screen flex bg-gradient-to-br from-white to-purple-50">
@@ -67,7 +69,7 @@ export default function LoginPage() {
 
             {/* RIGHT SIDE */}
             <div className="w-4/5 flex items-center justify-center bg-gradient-to-b from-purple-50 to-white">
-                <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl p-10 border border-gray-100">
+                <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl p-10 border border-gray-100 hover:shadow-5xl duration-300">
                     {/* Tabs */}
                     <div className="flex bg-gray-100 rounded-xl p-1 mb-10">
                         <button
@@ -92,8 +94,39 @@ export default function LoginPage() {
                         </button>
                     </div>
 
-                    {/* CONDITIONAL FORM */}
-                    {isSignup ? <SignupForm /> : <LoginForm />}
+                    {/* FORM CONTAINER WITH ANIMATION */}
+                    <div 
+                        ref={containerRef}
+                        className="relative overflow-hidden min-h-[500px]"
+                    >
+                        {/* Login Form with Animation */}
+                        <div 
+                            className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                                !isSignup 
+                                    ? "translate-x-0 opacity-100" 
+                                    : direction === "right" 
+                                        ? "-translate-x-full opacity-0" 
+                                        : "translate-x-full opacity-0"
+                            }`}
+                        >
+                            <LoginForm />
+                        </div>
+                        
+                        {/* Signup Form with Animation */}
+                        <div 
+                            className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                                isSignup 
+                                    ? "translate-x-0 opacity-100" 
+                                    : direction === "right" 
+                                        ? "translate-x-full opacity-0" 
+                                        : "-translate-x-full opacity-0"
+                            }`}
+                        >
+                            <SignupForm />
+                        </div>
+                    </div>
+                    {/* CONDITIONAL FORM
+                    {isSignup ? <SignupForm /> : <LoginForm />} */}
                 </div>
             </div>
         </div>

@@ -71,7 +71,7 @@ export default function NavBar() {
 
         <div className="pt-8 border-t border-gray-200">
           <Link
-            href="/login"
+            href="/"
             className="flex items-center gap-3 px-4 py-3.5 rounded-lg hover:bg-gray-100 duration-200 transition-colors text-gray-700"
           >
             <div className="flex items-center gap-3">
