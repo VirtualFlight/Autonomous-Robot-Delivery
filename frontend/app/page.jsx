@@ -316,7 +316,7 @@ function Terms() {
 
 function FeatureCard({ title, subtitle, color, icon }) {
     return (
-        <div className="flex-1 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <div className="flex-1 bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:scale-102 hover:shadow-lg duration-300">
             <div className="flex items-center gap-2 mb-2">
                 <span className="text-lg">{icon}</span>
                 <p className={`font-bold text-2xl ${color}`}>{title}</p>

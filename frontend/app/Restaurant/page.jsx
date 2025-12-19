@@ -56,7 +56,7 @@ export default function Home() {
   const handleQuickOrder = async (restaurant) => {
     if (!customer) {
       alert("log in!");
-      window.location.href = "/login";
+      window.location.href = "/";
       return;
     }
 
